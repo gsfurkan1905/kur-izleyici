@@ -1,43 +1,44 @@
-# .github/workflows/check.yaml
+# .github/workflows/check.yaml 
 
-name: Doviz Kuru Kontrolu
+name: Hisse Fiyati Kontrolu # (İsmi de güncelledim)
 
-# Bu işin ne zaman çalışacağını belirler
 on:
   schedule:
-    # "cron" formatı: "Her 15 dakikada bir çalıştır"
-    # Not: GitHub Actions en sık 5 dakikada bir çalışabilir.
-    # API'yi yormamak için 15 dakika iyidir.
-    - cron: '*/15 * * * *'
+    # --- DEĞİŞİKLİK 1 ---
+    # API limitini aşmamak için "her 15 dakikada bir" yerine
+    # "her saatin başında" (saatte bir) çalışacak şekilde değiştirildi.
+    - cron: '0 * * * *'
   
   # "Actions" sekmesinden elle tetiklemeyi de etkinleştirir
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Kodu Linux sunucuda çalıştır
+    runs-on: ubuntu-latest
 
     steps:
-      # 1. Adım: Kodu sunucuya indir
       - name: Kodu Kopyala
         uses: actions/checkout@v3
 
-      # 2. Adım: Python'u kur
       - name: Python 3.10 Kur
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
-      # 3. Adım: Gerekli kütüphaneleri (requests) kur
       - name: Kütüphaneleri Kur
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 4. Adım: Ana Python betiğini çalıştır
-      - name: Kur Izleyiciyi Çalıştır
+      - name: Hisse Izleyiciyi Çalıştır # (Adımı da güncelledim)
         env:
-          # Gizli bilgileri GitHub Secrets'tan alıp koda aktar
+          # --- DEĞİKLİK 2 ---
+          # Hisse senedi API anahtarını Python koduna aktarmak
+          # için bu satır eklendi.
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+          
+          # Mevcut sırlarımız da burada kalıyor
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          
         run: python kur_izleyici.py
