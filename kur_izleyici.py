@@ -16,7 +16,7 @@ import os  # Secrets (gizli bilgiler) okumak için eklendi
 
 # --- Alarm Yapılandırması ---
 # (Hedefleri buradan veya GitHub Secrets'tan ayarlayabilirsiniz)
-HEDEF_KUR = 50.0
+HEDEF_KUR = 49.0
 KAYNAK_BIRIM = "EUR"
 HEDEF_BIRIM = "TRY"
 API_URL = f"https://api.frankfurter.app/latest?from={KAYNAK_BIRIM}&to={HEDEF_BIRIM}"
