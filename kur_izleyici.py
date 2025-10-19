@@ -42,7 +42,7 @@ def gonder_telegram_bildirimi(token, chat_id, mesaj):
     
     print("Telegram'a bildirim gönderiliyor...")
     try:
-        response = requests.get(telegram_api_url, params=params, timeout=10)
+        response = requests.get(telegram_api_url, params=params, timeout=60)
         response.raise_for_status() 
         print("Bildirim başarıyla gönderildi.")
     except requests.exceptions.RequestException as e:
@@ -55,7 +55,7 @@ def kuru_kontrol_et():
     print("--- Döviz Kuru Kontrolü Başlatıldı ---")
     
     try:
-        response = requests.get(API_URL, timeout=10)
+        response = requests.get(API_URL, timeout=60)
         response.raise_for_status()
         veri_sozluk = response.json() 
         
