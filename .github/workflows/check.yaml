@@ -1,6 +1,6 @@
 # .github/workflows/check.yaml 
 
-name: Hisse Fiyati Kontrolu # (İsmi de güncelledim)
+name: kur_izleyici.py # (İsmi de güncelledim)
 
 on:
   schedule:
